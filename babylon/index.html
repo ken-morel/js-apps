@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>foyer</title>
+		<script type="text/javascript" src="babylon.js"></script>
+	</head>
+	<body>
+		<canvas width="500" height="500" id="main">
+		</canvas>
+
+	</body>
+	<script type="text/javascript">
+		let cnv = document.querySelector("canvas");
+		let engine = new BABYLON.Engine(cnv);
+		let scene = new BABYLON.Scene(engine);
+		scene.clearColor = new BABYLON.Color3(0.3, 0.3, 0.4);
+
+		let camera = new BABYLON.FreeCamera("camera", new BABYLON.Vector3(0, 0, -100), scene);
+		let light = new BABYLON.PointLight("light", new BABYLON.Vector3(10, 10, 0), scene);
+
+		let cx = cy = cz = 0;
+		let mx = my = 0;
+		cnv.onmousemove = (e) => {
+			mx = e.x;
+			my = e.y;
+		}
+		let box = new BABYLON.Mesh.CreateBox("squarred", 2, scene);
+		function render() {
+			rx = (mx - cnv.width/2) / cnv.width / 20;
+			ry = (my - cnv.height/2) / cnv.height / 20;
+			cx -= ry;
+			cy -= rx;
+			box.rotation.x = cx;
+			box.rotation.y = cy;
+			box.rotation.z = cz;
+			scene.render();
+		}
+
+		class Wall {
+			constructor(thickness=1, width=1, height=1) {
+				this.boxes = [];
+				
+
+			}
+		}
+
+		engine.runRenderLoop(render);
+	</script>
+</html>
